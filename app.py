@@ -7,6 +7,8 @@ st.sidebar.image("DMC.png")
 
 modulo = st.sidebar.selectbox("Elija un módulo", ["Módulo Listas","Módulo Array","Módulo funciones"])
 
+if modulo == "Módulo Listas":
+  
 valor_inicial = st.number_input("Ingrese el valor inicial", value=0)
 valor_final = st.number_input("Ingrese el valor final",value=1)
 
