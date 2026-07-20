@@ -1,107 +1,88 @@
 import streamlit as st
-import statistics
 
-# Clase para manejar información de una persona
-class Persona:
-    def __init__(self, nombre, edad, profesion):
-        self.nombre = nombre
-        self.edad = edad
-        self.profesion = profesion
+import numpy as np
 
-    def saludar(self):
-        return f"Hola, me llamo {self.nombre}. ¡Mucho gusto en conocerte!"
+import libreria_funciones as lf
 
-    def obtener_edad(self):
-        return f"Tengo {self.edad} años."
+ 
 
-    def obtener_profesion(self):
-        return f"Soy {self.profesion}."
+st.title("Proyecto módulo 1 Fundamentals")
 
-# Clase para manejar cálculos con listas
-class CalculadoraListas:
-    def __init__(self):
-        self.lista = []
+st.sidebar.title("Parámetros")
 
-    def agregar_numero(self, numero):
-        self.lista.append(numero)
-        st.success(f"✅ Número {numero} agregado a la lista.")
-        st.write(f"📋 Lista actual: {self.lista}")  # Mostrar la lista actualizada
+ 
 
-    def calcular_suma(self):
-        return sum(self.lista)
+st.image("Python_logo.png")
 
-    def calcular_promedio(self):
-        return sum(self.lista) / len(self.lista) if self.lista else 0
+st.sidebar.image("DMC.png")
 
-    def calcular_maximo(self):
-        return max(self.lista) if self.lista else None
+ 
 
-    def calcular_minimo(self):
-        return min(self.lista) if self.lista else None
+modulo = st.sidebar.selectbox("Elija un módulo", ["Módulo Listas","Módulo Array","Módulo funciones"])
 
-    def calcular_desviacion_estandar(self):
-        if len(self.lista) > 1:
-            return round(statistics.stdev(self.lista), 3)
-        return None
+ 
 
-    def mostrar_estadisticas(self):
-        if not self.lista:
-            return "La lista está vacía."
-        return f"""
-        📊 **Estadísticas Descriptivas:**
-        - **Suma:** {self.calcular_suma()}
-        - **Promedio:** {self.calcular_promedio():.2f}
-        - **Máximo:** {self.calcular_maximo()}
-        - **Mínimo:** {self.calcular_minimo()}
-        - **Desviación Estándar:** {self.calcular_desviacion_estandar() if self.calcular_desviacion_estandar() is not None else 'N/A'}
-        """
+if modulo == "Módulo Listas":
 
-# Interfaz de Streamlit
-st.title("📊 Calculadora de Listas y Persona")
+ 
 
-# Selección de página
-pagina = st.sidebar.selectbox("Selecciona una página:", ["🏠 Home", "📋 Ejemplos"])
+  valor_inicial = st.number_input("Ingrese el valor inicial", value=0)
 
-if pagina == "🏠 Home":
-    st.header("🏠 Bienvenido a la Aplicación")
-    st.write("Esta aplicación está construida con **Streamlit**, una herramienta poderosa para crear aplicaciones web interactivas con Python.")
-    st.write("En este ejemplo, aprenderás cómo funcionan las clases en Python a través de dos casos prácticos:")
-    st.markdown("1️⃣ **Clase Persona**: Para manejar información personal (nombre, edad, profesión).")
-    st.markdown("2️⃣ **Clase Calculadora de Listas**: Para realizar cálculos estadísticos básicos sobre listas de números.")
-    st.write("Selecciona una opción en el menú desplegable para explorar cada uno de los ejemplos.")
+  valor_final = st.number_input("Ingrese el valor final", value = 1)
 
-elif pagina == "📋 Ejemplos":
-    tabs = st.tabs(["👤 Ejemplo de Persona", "📋 Ejemplo de Calculadora de Listas"])
+  lista_numerica = list(range(valor_inicial,valor_final))
 
-    with tabs[0]:
-        st.header("👤 Información de la Persona")
-        nombre = st.text_input("Introduce tu nombre:")
-        edad = st.number_input("Introduce tu edad:", min_value=0, step=1)
-        profesion = st.text_input("Introduce tu profesión:")
+  st.write(lista_numerica)
 
-        if st.button("Guardar Persona"):
-            persona = Persona(nombre, edad, profesion)
-            st.success(persona.saludar())
-            st.info(persona.obtener_edad())
-            st.info(persona.obtener_profesion())
+ 
 
-    with tabs[1]:
-        st.header("📋 Calculadora de Listas")
+elif modulo == "Módulo Array":
 
-        if 'calculadora' not in st.session_state:
-            st.session_state.calculadora = CalculadoraListas()
+  st.write("Estas en el módulo de arreglos")
 
-        numero = st.number_input("Introduce un número para agregar a la lista:", step=1.0)
+  
 
-        if st.button("Agregar número"):
-            st.session_state.calculadora.agregar_numero(numero)
+  limite_inferior = st.number_input("Ingrese el límite inferior", value=1200)
 
-        if st.button("Mostrar estadísticas"):
-            estadisticas = st.session_state.calculadora.mostrar_estadisticas()
-            st.write(estadisticas)
+  limite_superior = st.number_input("Ingrese el límite superior", value = 1250)
 
-        if st.button("Limpiar lista"):
-            st.session_state.calculadora.lista = []
-            st.info("🗑️ Lista limpiada con éxito.")
+  cantidad_datos =  st.number_input("Ingrese totalidad de datos a crear", value = 31)
 
+ 
+
+  datos_produccion = np.random.randint(limite_inferior, limite_superior, cantidad_datos)
+
+ 
+
+  st.write(datos_produccion)
+
+ 
+
+  st.write("La producción total es:" ,  np.sum(datos_produccion))
+
+  st.write("La producción promedio es:" , np.mean(datos_produccion) )
+
+ 
+
+else:
+
+  st.write("Estas en el módulo de funciones")
+
+  
+
+  principal = st.number_input("Ingrese el Monto del préstamo", value=0)
+
+  tasa_anual  = st.number_input("Ingrese Tasa anual en decimal", value=0.10)
+
+  anios = st.number_input("Ingrese el Número de años del préstamo", value=1)
+
+  pagos_por_anio =st.number_input("Ingrese el Cantidad de pagos por año", value=12)
+
+  
+
+  cuota  = lf.cuota_prestamo(principal, tasa_anual, anios, pagos_por_anio)
+
+  
+
+  st.write("La cuota mensual de pago será:", cuota)
 
