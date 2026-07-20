@@ -44,4 +44,4 @@ else:
    
   cuota  = lf.cuota_prestamo(principal, tasa_anual, anios, pagos_por_anio)
   
-  st.write("La cuota mensual de pago será:", cuota
+  st.write("La cuota mensual de pago será:", cuota)
